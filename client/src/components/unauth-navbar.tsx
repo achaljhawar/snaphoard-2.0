@@ -96,7 +96,7 @@ export default function UnAuthNavbar() {
               Login
             </Link>
             <Link
-              href="#"
+              href="/auth/signup"
               className={cn(
                 `text-sm sm:text-base font-medium transition-colors ${
                   isDarkMode
@@ -156,7 +156,7 @@ export default function UnAuthNavbar() {
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Link
-                  href="#"
+                  href="/auth/signup"
                   className={cn(
                     `text-sm sm:text-base font-medium transition-colors ${
                       isDarkMode
