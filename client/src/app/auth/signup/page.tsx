@@ -25,7 +25,6 @@ import {
 } from "@/components/ui/select";
 import { toast, Toaster } from "react-hot-toast";
 import { eyeClose, eyeOpen } from "@/components/icons";
-import { cookies } from "next/headers";
 
 const ErrorMessage = styled.p`
   font-size: 0.75rem;
@@ -59,7 +58,9 @@ const IconWrapper = styled.button`
 export default function LoginPage() {
   const [type, setType] = useState("password");
   const [Icon, setIcon] = useState(() => eyeClose);
+
   type TAuthCredentialValidator = z.infer<typeof AuthCredentialsValidator>;
+
   const {
     control,
     register,
@@ -83,6 +84,19 @@ export default function LoginPage() {
     try {
       if (data) {
         console.log("Form submitted successfully:", data);
+        const response = await fetch("http://localhost:7000/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        });
+        if (!response.ok) {
+          throw new Error("Error submitting form");
+        } else {
+          const { verification_code } = await response.json();
+          console.log("Verification code:", verification_code);
+        }
         toast.success(
           "Form submitted successfully. Check your email to verify your account."
         );
@@ -195,7 +209,7 @@ export default function LoginPage() {
                   control={control}
                   render={({ field }) => (
                     <Select onValueChange={field.onChange} value={field.value}>
-                      <SelectTrigger className="w-[350px]">
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select a role" />
                       </SelectTrigger>
                       <SelectContent>
