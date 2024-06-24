@@ -41,10 +41,5 @@ COPY --from=prerelease /usr/src/app /usr/src/app
 
 # Set the user to bun
 USER bun
-
-# Sliplane will provide the PORT, so we don't need to set it here
-# We'll use an EXPOSE instruction without a specific port
-EXPOSE 8080-65535
-
-# Run the app
+EXPOSE 3000/tcp
 CMD ["bun", "run", "dev"]

@@ -32,8 +32,8 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(7000, () => {
-  console.log(`Listening on port ${7000}...`);
+server.listen(9000, () => {
+  console.log(`Listening on port ${9000}...`);
 });
 
 process.on("uncaughtException", (err) => {
