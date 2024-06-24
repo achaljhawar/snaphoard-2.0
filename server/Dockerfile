@@ -47,4 +47,4 @@ USER bun
 EXPOSE 8080-65535
 
 # Run the app
-CMD ["bun", "run", "start"]
+CMD ["bun", "run", "dev"]
