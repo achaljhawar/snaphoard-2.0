@@ -1,15 +1,14 @@
-# Use the official Bun image
 FROM oven/bun:1 as base
 WORKDIR /usr/src/app
 
-# Declare ARG instructions before they are used
+# Declare ARG instructions for build-time variables
 ARG PASSWORDSEED
 ARG EMAIL
 ARG EMAIL_PASSWORD
 ARG SUPABASE_URL
 ARG SUPABASE_KEY
 ARG FRONTEND_URL
-ARG PORT=3000
+
 
 # Set ENV instructions to use the ARG values
 ENV PASSWORDSEED=${PASSWORDSEED}
@@ -18,7 +17,7 @@ ENV EMAIL_PASSWORD=${EMAIL_PASSWORD}
 ENV SUPABASE_URL=${SUPABASE_URL}
 ENV SUPABASE_KEY=${SUPABASE_KEY}
 ENV FRONTEND_URL=${FRONTEND_URL}
-ENV PORT=${PORT}
+
 
 # Install dependencies into a temp folder
 FROM base AS install
@@ -43,8 +42,9 @@ COPY --from=prerelease /usr/src/app /usr/src/app
 # Set the user to bun
 USER bun
 
-# Use the PORT environment variable for EXPOSE
-EXPOSE ${PORT}
+# Sliplane will provide the PORT, so we don't need to set it here
+# We'll use an EXPOSE instruction without a specific port
+EXPOSE 8080-65535
 
 # Run the app
-CMD ["bun", "run", "dev"]
+CMD ["bun", "run", "start"]
