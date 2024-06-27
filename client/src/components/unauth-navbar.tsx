@@ -38,6 +38,7 @@ export default function UnAuthNavbar() {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const { setTheme } = useTheme();
   const device = useDeviceDetection();
+  const pathname = usePathname();
 
   useEffect(() => {
     setTheme(isDarkMode ? "dark" : "light");
@@ -46,6 +47,10 @@ export default function UnAuthNavbar() {
   const handleThemeToggle = () => {
     setIsDarkMode(!isDarkMode);
   };
+
+  if (pathname === "/auth/verify" || pathname === "/404") {
+    return null;
+  }
 
   return (
     <header className="flex items-center justify-between p-2 sm:p-4 md:px-6 lg:px-8">

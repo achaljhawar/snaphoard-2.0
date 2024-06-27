@@ -55,7 +55,7 @@ const IconWrapper = styled.button`
   }
 `;
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [type, setType] = useState("password");
   const [Icon, setIcon] = useState(() => eyeClose);
 
@@ -83,23 +83,25 @@ export default function LoginPage() {
   const onSubmit = async (data: TAuthCredentialValidator) => {
     try {
       if (data) {
-        console.log("Form submitted successfully:", data);
-        const response = await fetch("http://localhost:7000/api/auth/signup", {
+        const backendurl = process.env.NEXT_PUBLIC_BACKEND_URL;
+        const response = await fetch(`${backendurl}/api/auth/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(data),
         });
+        console.log("Form submitted successfully:", data);
+        console.log("Response:", response);
         if (!response.ok) {
-          throw new Error("Error submitting form");
+          console.error("Error submitting form:", response);
         } else {
           const { verification_code } = await response.json();
           console.log("Verification code:", verification_code);
+          toast.success(
+            "Form submitted successfully. Check your email to verify your account."
+          );
         }
-        toast.success(
-          "Form submitted successfully. Check your email to verify your account."
-        );
       } else {
         toast.error("Error submitting form. Please try again.");
       }

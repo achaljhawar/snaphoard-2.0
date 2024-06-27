@@ -65,6 +65,7 @@ const CameraIcon = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
 const HamburgerMenuIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -85,6 +86,7 @@ const HamburgerMenuIcon = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
 const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -103,6 +105,7 @@ const CloseIcon = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
 const BrushIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -122,6 +125,7 @@ const BrushIcon = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
 const InfoIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -142,6 +146,7 @@ const InfoIcon = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
 const ShareIcon = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -162,6 +167,7 @@ const ShareIcon = (props: React.SVGProps<SVGSVGElement>) => {
     </svg>
   );
 };
+
 const eyeOpen = (props: React.SVGProps<SVGSVGElement>) => {
   return (
     <svg
@@ -202,6 +208,47 @@ const eyeClose = (props: React.SVGProps<SVGSVGElement>) => {
   );
 };
 
+function CheckIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+function LoaderPinwheelIcon(props: React.SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M2 12c0-2.8 2.2-5 5-5s5 2.2 5 5 5-2.2 5-5" />
+      <path d="M7 20.7a1 1 0 1 1 5-8.7 1 1 0 1 0 5-8.6" />
+      <path d="M7 3.3a1 1 0 1 1 5 8.6 1 1 0 1 0 5 8.6" />
+      <circle cx="12" cy="12" r="10" />
+    </svg>
+  );
+}
+
 export {
   MoonIcon,
   SunIcon,
@@ -212,5 +259,7 @@ export {
   InfoIcon,
   ShareIcon,
   eyeOpen,
-  eyeClose
+  eyeClose,
+  CheckIcon,
+  LoaderPinwheelIcon
 };
