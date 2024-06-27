@@ -1,5 +1,5 @@
 // signup functions
-import express, { type Request, type Response } from "express";
+import type { Request, Response } from "express";
 import nodemailer from "nodemailer";
 import { authcodecreator, generateEightDigitNumber } from "../lib/utils";
 import { z } from "zod";

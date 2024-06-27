@@ -14,8 +14,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { eyeClose, eyeOpen } from "@/components/icons";
+import { loginUser } from "@/actions/login";
+import { useRouter } from "next/navigation";
 
 const ErrorMessage = styled.p`
   font-size: 0.75rem;
@@ -67,6 +69,11 @@ const AuthCredentialsValidator = z.object({
 export default function LoginPage() {
   const [type, setType] = useState("password");
   const [Icon, setIcon] = useState(() => eyeClose);
+  const [isPending, startTransition] = useTransition();
+  const [loginMessage, setLoginMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
   type TAuthCredentialValidator = z.infer<typeof AuthCredentialsValidator>;
   const {
     register,
@@ -75,20 +82,22 @@ export default function LoginPage() {
   } = useForm<TAuthCredentialValidator>({
     resolver: zodResolver(AuthCredentialsValidator),
   });
+
   const onSubmit = async (data: TAuthCredentialValidator) => {
+    setIsLoading(true);
+    setLoginMessage("");
+
     try {
-      if (data) {
-        console.log(data);
-        const response = await fetch("/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        });        
+      const result = await loginUser(data);
+      if (result.success) {
+        router.push("/");
+      } else {
+        setLoginMessage(result.error || "Login failed. Please try again.");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Login error:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
   const handleToggle = () => {
@@ -100,7 +109,6 @@ export default function LoginPage() {
       setType("password");
     }
   };
-
   return (
     <div className="flex flex-col items-center justify-center min-h-[90vh]">
       <br />

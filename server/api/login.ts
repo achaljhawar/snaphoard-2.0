@@ -1,5 +1,5 @@
 // login functions
-import express, { type Request, type Response } from "express";
+import type { Request, Response } from "express";
 import { z } from "zod";
 import { supabase } from "../db/supabase";
 import jwt from "jsonwebtoken";
@@ -56,6 +56,9 @@ export const loginUser = async (req: Request, res: Response) => {
     }
   } catch (error) {
     console.error(error);
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({ error: error.errors });
+    }
     return res.status(500).json({ error: "Internal server error" });
   }
 };
