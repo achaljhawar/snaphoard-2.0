@@ -2,8 +2,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
 import UnAuthNavbar from "@/components/unauth-navbar";
+import { Analytics } from '@vercel/analytics/react';
 const inter = Inter({ subsets: ["latin"] });
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,6 +22,7 @@ export default function RootLayout({
           >
             <UnAuthNavbar />
             {children}
+            <Analytics />
           </ThemeProvider>
         </body>
       </html>
