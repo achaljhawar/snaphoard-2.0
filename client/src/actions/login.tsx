@@ -34,11 +34,7 @@ export async function loginUser(
     return { error: "Invalid fields" };
   }
 
-  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
-  if (!backendUrl) {
-    return { error: "Backend URL is not configured" };
-  }
-
+  const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL!;
   try {
     const response = await fetch(`${backendUrl}/api/auth/login`, {
       method: "POST",
