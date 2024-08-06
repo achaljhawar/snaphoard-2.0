@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { verifyToken } from "@/actions/verifytoken";
 
-const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
+const isNewUser = <P extends object>(Component: React.ComponentType<P>) => {
   const Auth = (props: P) => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
@@ -17,12 +17,12 @@ const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
           if (result.error) {
             throw new Error(result.error);
           }
-
-          if (result.success && !result.newUser) {
+          if (result.newUser) {
             setLoading(false);
-          } else if (result.success && result.newUser) {
-            router.replace("/auth/newuser");
+          } else if (result.success && !result.newUser) {
+            router.replace("/dashboard");
           } else {
+            router.replace("/auth/login");
             throw new Error("Authentication failed");
           }
         } catch (error) {
@@ -48,4 +48,4 @@ const withAuth = <P extends object>(Component: React.ComponentType<P>) => {
   return Auth;
 };
 
-export default withAuth;
+export default isNewUser;

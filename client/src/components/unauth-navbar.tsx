@@ -18,9 +18,11 @@ import {
   CameraIcon,
   HamburgerMenuIcon,
   CloseIcon,
+  ChromeIcon,
+  GoogleIcon,
 } from "@/components/icons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import useDeviceDetection from "@/hooks/useDeviceDetection";
 import { Pacifico, Permanent_Marker } from "next/font/google";
 
@@ -48,10 +50,12 @@ export default function UnAuthNavbar() {
     setIsDarkMode(!isDarkMode);
   };
 
-  if (pathname === "/auth/verify" || pathname === "/404") {
+  if (pathname === "/auth/verify" || pathname === "/404" || pathname === "/auth/newuser") {
     return null;
   }
-
+  const handleGoogleLogin = async () => {
+    window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/callback/google`;
+  };
   return (
     <header className="flex items-center justify-between p-2 sm:p-4 md:px-6 lg:px-8">
       <Link href="/" className="flex items-center" prefetch={false}>
@@ -116,68 +120,73 @@ export default function UnAuthNavbar() {
             </Link>
           </>
         ) : (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <HamburgerMenuIcon
-                  className={`h-6 w-6 ${
-                    isDarkMode ? "text-gray-50" : "text-gray-900"
-                  }`}
-                />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem>
-                <Link
-                  href="#"
-                  className={cn(
-                    `text-sm sm:text-base font-medium transition-colors ${
-                      isDarkMode
-                        ? "text-gray-400 hover:text-gray-50"
-                        : "text-gray-700 hover:text-gray-900"
-                    }`,
-                    buttonVariants({ variant: "link" })
-                  )}
-                  prefetch={false}
-                >
-                  Explore
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link
-                  href="#"
-                  className={cn(
-                    `text-sm sm:text-base font-medium transition-colors ${
-                      isDarkMode
-                        ? "text-gray-400 hover:text-gray-50"
-                        : "text-gray-700 hover:text-gray-900"
-                    }`,
-                    buttonVariants({ variant: "link" })
-                  )}
-                  prefetch={false}
-                >
-                  Login
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link
-                  href="/auth/signup"
-                  className={cn(
-                    `text-sm sm:text-base font-medium transition-colors ${
-                      isDarkMode
-                        ? "text-gray-400 hover:text-gray-50"
-                        : "text-gray-700 hover:text-gray-900"
-                    }`,
-                    buttonVariants({ variant: "link" })
-                  )}
-                  prefetch={false}
-                >
-                  Signup
-                </Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <HamburgerMenuIcon
+                    className={`h-6 w-6 ${
+                      isDarkMode ? "text-gray-50" : "text-gray-900"
+                    }`}
+                  />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuItem>
+                  <Link
+                    href="#"
+                    className={cn(
+                      `text-sm sm:text-base font-medium transition-colors ${
+                        isDarkMode
+                          ? "text-gray-400 hover:text-gray-50"
+                          : "text-gray-700 hover:text-gray-900"
+                      }`,
+                      buttonVariants({ variant: "link" })
+                    )}
+                    prefetch={false}
+                  >
+                    Explore
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link
+                    href="#"
+                    className={cn(
+                      `text-sm sm:text-base font-medium transition-colors ${
+                        isDarkMode
+                          ? "text-gray-400 hover:text-gray-50"
+                          : "text-gray-700 hover:text-gray-900"
+                      }`,
+                      buttonVariants({ variant: "link" })
+                    )}
+                    prefetch={false}
+                  >
+                    Login
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link
+                    href="/auth/signup"
+                    className={cn(
+                      `text-sm sm:text-base font-medium transition-colors ${
+                        isDarkMode
+                          ? "text-gray-400 hover:text-gray-50"
+                          : "text-gray-700 hover:text-gray-900"
+                      }`,
+                      buttonVariants({ variant: "link" })
+                    )}
+                    prefetch={false}
+                  >
+                    Signup
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         )}
+        <Button variant="ghost" size="icon" className="rounded-full" onClick={handleGoogleLogin}>
+          <GoogleIcon className="h-6 w-6" />
+        </Button>
         <Button
           variant="ghost"
           size="icon"

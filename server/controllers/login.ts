@@ -41,18 +41,18 @@ export const loginUser = async (req: Request, res: Response) => {
       return res.status(404).json({ error: "User not found" });
     }
     if (data.isVerified === false) {
-        return res.status(403).json({ error: "Email not verified" });
+      return res.status(403).json({ error: "Email not verified" });
     }
     const { password: hashedPassword, id } = data;
     const isMatch = await Bun.password.verify(password + seed, hashedPassword);
     if (!isMatch) {
       return res.status(401).json({ error: "Incorrect Password" });
     } else {
-        const token = jwt.sign({ id }, Bun.env.JWT_SECRET as string, {
-            expiresIn: "30d",
-        });
+      const token = jwt.sign({ id }, Bun.env.JWT_SECRET as string, {
+        expiresIn: "30d",
+      });
 
-        return res.status(200).json({ token });   
+      return res.status(200).json({ token });
     }
   } catch (error) {
     console.error(error);

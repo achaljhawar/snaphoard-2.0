@@ -110,7 +110,7 @@ export default function LoginPage() {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center min-h-[90vh]">
+    <div className="flex flex-col items-center justify-center min-h-[90vh] ">
       <br />
       <br />
       <Card className="mx-auto max-w-sm gap-2 -mt-20">

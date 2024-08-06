@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import cors from "cors";
 import helmet from "helmet";
 import authRoutes from "./routes/authRoutes";
-
+import querystring from "querystring";
 const app = express();
 
 const server = createServer(app);
@@ -16,11 +16,32 @@ export const io = new Server(server, {
   },
 });
 
+function getGoogleAuthURL() {
+  const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+  const options = {
+    redirect_uri: Bun.env.GOOGLE_REDIRECT_URI as string,
+    client_id: Bun.env.GOOGLE_CLIENT_ID,
+    access_type: "online",
+    response_type: "code",
+    prompt: "consent",
+    scope: [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+    ].join(" "),
+  };
+  return `${rootUrl}?${querystring.stringify(options)}`;
+}
+
 app.use(helmet());
 app.use(cors({
   origin: Bun.env.FRONTEND_URL,
   credentials: true,
 }));
+
+app.get("/callback/google" , (req,res) => {
+  res.redirect(getGoogleAuthURL())
+})
+
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);

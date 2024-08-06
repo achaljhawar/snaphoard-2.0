@@ -21,11 +21,13 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.43.5",
     "@vercel/kv": "^2.0.0",
+    "axios": "^1.7.2",
     "cors": "^2.8.5",
     "helmet": "^7.1.0",
     "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^6.9.14",
+    "querystring": "^0.2.1",
     "socket-io": "^1.0.0",
     "socket.io": "^4.7.5",
     "stripe": "^15.12.0",

@@ -22,7 +22,8 @@ export async function verifyToken() {
     });
     const data = await response.json();
     if (response.ok) {
-      return { success: true, message: data.message };
+      const isNewUser = response.status === 201; 
+      return { success: true, message: data.message, newUser: isNewUser};
     } else {
       return { error: data.error || "Token verification failed" };
     }

@@ -38,7 +38,9 @@ export const checkAuth = async (req: Request, res: Response) => {
       .select("*")
       .eq("id", id)
       .single();
-
+    if (user.role === null){
+      return res.status(201).json({ message: "New user" });
+    }
     if (error) {
       console.error("Supabase error:", error);
       return res.status(500).json({ error: "Internal Server Error" });
